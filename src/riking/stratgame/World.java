@@ -9,15 +9,17 @@ public class World {
 	public int sizeY;
 	public TickTaskScheduler scheduler;
 	public static World instance;
+	public boolean theGameMustGoOn;
 	
-	public long time;
-	public Team[] teams;
+	public long tick = -1;
+	public Team[] teams = new Team[0];
 	
 	public static World getWorld() { return instance; }
 	public World setGlobal() {
 		instance = this;
 		return this;
 	}
+	public static TickTaskScheduler getScheduler() { return instance.scheduler; }
 	
 	public World(int size)
 	{
@@ -25,6 +27,7 @@ public class World {
 	}
 	public World(int sizeX, int sizeY)
 	{
+		scheduler = new TickTaskScheduler();
 		this.sizeX = sizeX;
 		this.sizeY = sizeY;
 		tiles = new Tile[sizeX][sizeY];
@@ -35,15 +38,16 @@ public class World {
 				tiles[x][y] = new Tile(x,y);
 			}
 		}
+		theGameMustGoOn = true;
 	}
 	
 	public Tile getTile(int posX, int posY)
 	{
 		return tiles[posX][posY];
 	}
-	public World replaceTile(Tile newTile, int posX, int posY)
+	public World replaceTile(Tile newTile)
 	{
-		tiles[posX][posY] = newTile;
+		tiles[newTile.posX][newTile.posY] = newTile;
 		return this;
 	}
 	public World addTeam(Team t)

@@ -14,4 +14,12 @@ public class Team {
 		this.name = name;
 		this.ident = ident;
 	}
+	public boolean isOpposedTo(Team other)
+	{
+		return this.id != other.id; // temp definition
+	}
+	public boolean isAlliedTo(Team other)
+	{
+		return this.id == other.id; // temp definition
+	}
 }

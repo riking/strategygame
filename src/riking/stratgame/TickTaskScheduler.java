@@ -13,6 +13,7 @@ public class TickTaskScheduler {
 	public TickTaskScheduler()
 	{
 		tasks = new TreeSet<Task>(new CompTask());
+		currentTick = -1;
 	}
 	public void tick(long t)
 	{
@@ -21,7 +22,14 @@ public class TickTaskScheduler {
 		Task temp = new TaskStub(t);
 		if(tasks.contains(temp))
 		{
-			tasks.ceiling(temp).run();
+			Task toDo = tasks.ceiling(temp);
+			toDo.run();
+			tasks.remove(toDo);
+		}
+		if(tasks.isEmpty())
+		{
+			new Error("No more tasks to run!").printStackTrace();
+			World.getWorld().theGameMustGoOn = false;
 		}
 	}
 	/**
@@ -41,6 +49,7 @@ public class TickTaskScheduler {
 	 */
 	public void add(Task newTask)
 	{
+		System.out.println(tasks.contains(newTask));
 		if(tasks.contains(newTask)) // If a task already occupies that tick
 		{
 			TaskGroup tg = new TaskGroup(tasks.floor(newTask));
