@@ -4,6 +4,7 @@ public class World {
 	public Tile[][] tiles;
 	public int sizeX;
 	public int sizeY;
+	public TickTaskScheduler scheduler;
 	public static World instance;
 	
 	public static World getWorld() { return instance; }

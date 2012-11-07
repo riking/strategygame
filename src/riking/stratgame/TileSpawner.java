@@ -6,5 +6,8 @@ public class TileSpawner extends Tile {
 		super(posx, posy);
 		// TODO Auto-generated constructor stub
 	}
-
+	public void scheduleFirstRun()
+	{
+		
+	}
 }
