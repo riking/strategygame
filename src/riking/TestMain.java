@@ -12,8 +12,6 @@ public class TestMain {
 		System.out.println(a.toString());
 		EAtkType b = EAtkType.get(5);
 		System.out.println(b.toString());
-		EAtkType c = EAtkType.get(-1);
-		System.out.println(c.toString());
 		
 	}
 

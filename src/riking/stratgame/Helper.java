@@ -6,4 +6,9 @@ public class Helper {
 		{0,1},        {0,-1},
 		{-1,1},{-1,0},{-1,-1}
 	};
+	public static final int[][] sequenceWithSelf = new int[][] {
+		{1,1}, {1,0}, {1,-1},
+		{0,1}, {0,0}, {0,-1},
+		{-1,1},{-1,0},{-1,-1}
+	};
 }
