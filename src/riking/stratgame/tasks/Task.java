@@ -3,6 +3,8 @@ package riking.stratgame.tasks;
 public abstract class Task implements Runnable, Comparable<Task>
 {
 	public long tick;
+	public PEBehavior postExecuteBehavior = PEBehavior.DENY_POST_EXECUTE;
+	
 	@Override public int compareTo(Task t)
 	{ return (int)(tick - t.tick); }
 	@Override public boolean equals(Object o)
@@ -21,4 +23,10 @@ public abstract class Task implements Runnable, Comparable<Task>
 	 * Executes the Task.
 	 */
 	public abstract void run();
+	
+	public enum PEBehavior
+	{
+		DENY_POST_EXECUTE,
+		ALLOW_POST_EXECUTE;
+	}
 }

@@ -1,20 +1,24 @@
 package riking.stratgame;
 
+import riking.stratgame.tasks.Task;
 import riking.stratgame.tasks.TaskSpawner;
 
 public class TileSpawner extends Tile {
 	public Team myteam;
 	public int health;
+	public World world;
 	
 	public TileSpawner(Team t, int posx, int posy) {
 		super(posx, posy);
 		myteam = t;
-		// TODO Auto-generated constructor stub
+		world = World.getWorld();
 	}
 	
 	public void scheduleFirstRun()
 	{
-		World.getScheduler().schedule(new TaskSpawner(this),1);
+		TaskSpawner t = new TaskSpawner(this,0,false);
+		t.postExecuteBehavior = Task.PEBehavior.DENY_POST_EXECUTE;
+		world.scheduler.add(t);
 	}
 	@Override public boolean containsTarget(Team attacker)
 	{
