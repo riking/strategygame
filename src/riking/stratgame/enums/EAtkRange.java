@@ -2,7 +2,10 @@ package riking.stratgame.enums;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.Iterator;
+import java.util.List;
 
 import riking.stratgame.Tile;
 import riking.stratgame.iterators.IteratorLine;
@@ -14,7 +17,12 @@ public enum EAtkRange {
 	Range(IteratorLine.class),
 	Artillery(IteratorLine.class);
 	
-	Class<? extends Iterator<Tile>> classIter;
+	private static final List<EAtkRange> VALUES =
+		    Collections.unmodifiableList(Arrays.asList(values()));
+	public static final int SIZE = VALUES.size();
+	
+	private Class<? extends Iterator<Tile>> classIter;
+	
 	private EAtkRange(Class<? extends Iterator<Tile>> cIterator)
 	{
 		this.classIter = cIterator;
@@ -40,5 +48,10 @@ public enum EAtkRange {
 			}
 		}
 		throw new RuntimeException("suitable iterator not found");
+	}
+	
+	public static EAtkRange get(int i)
+	{
+		return VALUES.get(i);
 	}
 }

@@ -1,5 +1,9 @@
 package riking.stratgame.enums;
 
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+
 public enum EAtkType {
 	Annn(false,false,false),
 	Arnn(true, false,false),
@@ -12,11 +16,12 @@ public enum EAtkType {
 	private boolean red;
 	private boolean green;
 	private boolean blue;
-	/** count of different colors in this attack */
 	private int count;
-	private static EAtkType[] index = {
-			Annn, Arnn, Angn, Annb,
-			Argn, Arnb, Angb, Argb, };
+	
+	private static final List<EAtkType> VALUES =
+		    Collections.unmodifiableList(Arrays.asList(values()));
+	public static final int SIZE = VALUES.size();
+	
 	private EAtkType(boolean r, boolean g, boolean b)
 	{
 		red = r;
@@ -32,7 +37,7 @@ public enum EAtkType {
 	
 	public static EAtkType get(int i)
 	{
-		return index[i];
+		return VALUES.get(i);
 	}
 	public double resolveDefenses(double[] defense)
 	{

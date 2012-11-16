@@ -4,17 +4,14 @@ import java.util.Random;
 
 public class RandUtils
 {
-	private static RandUtils instance = new RandUtils();
-	private Random rand = new Random();
-	
-	private static RandUtils getInstance() { return instance; }
+	private static Random rand = new Random();
 	/**
 	 * Helper function
 	 * @return normal random number with mean 0 and standard deviation 1
 	 */
 	public static double randNorm(double mean, double stdev)
 	{
-		return getInstance().rand.nextGaussian() * stdev + mean;
+		return rand.nextGaussian() * stdev + mean;
 	}
 	/**
 	 * Randomly selects one position in the weights list and returns its index.
@@ -27,7 +24,7 @@ public class RandUtils
 		double pSum = 0;
 		for(int i=0; i<weights.length; i++)
 		{	pSum += weights[i];	}
-		double pInd = getInstance().rand.nextDouble() * pSum;
+		double pInd = rand.nextDouble() * pSum;
 		
 		for (int i=0; i<weights.length; i++)
 		{
@@ -48,5 +45,9 @@ public class RandUtils
 		if (weights.length != objects.length)
 			throw new ArrayIndexOutOfBoundsException("weightedChoice - dimension mismatch ("+weights.length+" vs "+objects.length+")");
 		return objects[weightedChoice(weights)];
+	}
+	public static Random getRandom()
+	{
+		return rand;
 	}
 }

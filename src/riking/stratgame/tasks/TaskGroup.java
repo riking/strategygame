@@ -13,6 +13,7 @@ public class TaskGroup extends Task
 	public TaskGroup(Task origin)
 	{
 		this.tick = origin.tick;
+		this.postExecuteBehavior = origin.postExecuteBehavior;
 		tasks = new ArrayList<Task>(3);
 		tasks.add(origin);
 	}
@@ -21,9 +22,7 @@ public class TaskGroup extends Task
 	 */
 	public TaskGroup(Task a, Task b)
 	{
-		this.tick = a.tick;
-		tasks = new ArrayList<Task>(3);
-		tasks.add(a);
+		this(a);
 		tasks.add(b);
 	}
 	/**

@@ -2,7 +2,7 @@ package riking.stratgame;
 
 public class GameStarter
 {
-	public static void run()
+	public static void setup()
 	{
 		World w = new World(9,9).setGlobal();
 		Team RED = new Team(1,"RED");
@@ -12,14 +12,15 @@ public class GameStarter
 		w.addTeam(RED).addTeam(BLUE).replaceTile(redSpawn).replaceTile(bluSpawn);
 		redSpawn.scheduleFirstRun();
 		bluSpawn.scheduleFirstRun();
-		mainloop(w);
 	}
-	public static void mainloop(World w)
+	public static void run()
 	{
+		World w = World.getWorld();
 		while (w.theGameMustGoOn)
 		{
 			w.tick++;
 			w.scheduler.tick(w.tick);
 		}
 	}
+	
 }

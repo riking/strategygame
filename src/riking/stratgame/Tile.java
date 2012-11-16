@@ -22,6 +22,10 @@ public class Tile {
 		return tmp;
 	}
 	
+	public boolean containsUnit()
+	{
+		return unit != null;
+	}
 	public boolean containsTarget(Team attacker)
 	{
 		if (unit == null) return false;

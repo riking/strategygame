@@ -1,5 +1,7 @@
 package riking.stratgame;
 
+import java.util.ArrayList;
+
 import riking.stratgame.Team;
 import riking.stratgame.Tile;
 
@@ -11,8 +13,8 @@ public class World {
 	public static World instance;
 	public boolean theGameMustGoOn;
 	
-	public long tick = -1;
-	public Team[] teams = new Team[0];
+	public long tick = 0;
+	public ArrayList<Team> teams = new ArrayList<Team>(2);
 	
 	public static World getWorld() { return instance; }
 	public World setGlobal() {
@@ -52,11 +54,7 @@ public class World {
 	}
 	public World addTeam(Team t)
 	{
-		// Copy old array and insert
-		Team[] temp = new Team[teams.length+1];
-		for (int i=0; i<teams.length; i++)
-		{ temp[i] = teams[i]; }
-		temp[teams.length] = t; 
+		teams.add(t);
 		return this;
 	}
 }

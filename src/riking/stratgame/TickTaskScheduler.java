@@ -5,7 +5,6 @@ import java.util.TreeSet;
 import riking.stratgame.tasks.CompTask;
 import riking.stratgame.tasks.Task;
 import riking.stratgame.tasks.TaskGroup;
-import riking.stratgame.tasks.TaskStub;
 
 public class TickTaskScheduler {
 	public TreeSet<Task> tasks;
@@ -18,29 +17,45 @@ public class TickTaskScheduler {
 	public void tick(long t)
 	{
 		currentTick = t;
-		System.out.println("tick "+Long.toString(t)+" (next "+Long.toString(tasks.first().tick));
-		Task temp = new TaskStub(t);
-		if(tasks.contains(temp))
-		{
-			Task toDo = tasks.ceiling(temp);
-			toDo.run();
-			tasks.remove(toDo);
-		}
-		if(tasks.isEmpty())
+		Task next = tasks.first();
+		if(next == null)
 		{
 			new Error("No more tasks to run!").printStackTrace();
 			World.getWorld().theGameMustGoOn = false;
+			return;
 		}
+		System.out.println("tick "+Long.toString(t)+" (next "+Long.toString(tasks.first().tick)+")");
+		if (next.tick < t)
+		{
+			System.err.println("WARNING: executing early tasks");
+			next = doPriorTasks(t); // Will return next task to run
+		}
+		if (next.tick > t) return;
+		next.run();
+		assert(tasks.remove(next));
+	}
+	private Task doPriorTasks(long untilTick)
+	{
+		Task next = tasks.first();
+		while(next.tick < untilTick)
+		{
+			if(next.postExecuteBehavior != Task.PEBehavior.ALLOW_POST_EXECUTE)
+			{
+				throw new IllegalStateException("Post-executed task");
+			}
+			next.run();
+			if (!tasks.remove(next))
+				throw new AssertionError();
+			next = tasks.first();
+		}
+		return next; // return for chaining purposes
 	}
 	/**
-	 * Adds a task to run <i>delay</i> ticks later.
-	 * (Note: This will set the tick value of the task. The task object should not be reused.)
+	 * Alias for add()
 	 * @param newTask The task to run.
-	 * @param delay How many ticks from now the task should run.
 	 */
-	public void schedule(Task newTask, long delay)
+	public void schedule(Task newTask)
 	{
-		newTask.tick = currentTick + delay;
 		add(newTask);
 	}
 	/**
@@ -49,7 +64,6 @@ public class TickTaskScheduler {
 	 */
 	public void add(Task newTask)
 	{
-		System.out.println(tasks.contains(newTask));
 		if(tasks.contains(newTask)) // If a task already occupies that tick
 		{
 			TaskGroup tg = new TaskGroup(tasks.floor(newTask));
