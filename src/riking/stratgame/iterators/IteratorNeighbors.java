@@ -4,8 +4,8 @@ import java.util.Iterator;
 import java.util.NoSuchElementException;
 
 import riking.stratgame.Helper;
-import riking.stratgame.Tile;
 import riking.stratgame.World;
+import riking.stratgame.tiles.Tile;
 
 public class IteratorNeighbors implements Iterator<Tile> {
 	private int state = 0;

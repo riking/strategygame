@@ -2,25 +2,41 @@ package riking.stratgame;
 
 import java.util.ArrayList;
 
+import riking.stratgame.tiles.TileSpawner;
+
 public class Team {
 	public int id;
 	public String name;
 	public char ident;
+	/**
+	 * Temporary variable for console printing. Will be changed to a Color vector.
+	 */
+	public int color;
 	
 	protected long money = 0;
 	public ArrayList<Team> allies;
+	protected TileSpawner homeBase;
 	
-	public Team(int id, String name)
+	public Team(int id, String name, int color)
 	{
-		this(id,name,name.charAt(0));
+		this(id,name,name.charAt(0),color);
 	}
-	public Team(int id, String name, char ident)
+	public Team(int id, String name, char ident, int color)
 	{
 		this.id = id;
 		this.name = name;
 		this.ident = ident;
 		allies = new ArrayList<Team>(1);
 	}
+	/**
+	 * Temporary method for console printing. Will be changed to a Color vector.
+	 * @return ANSI color code integer, >16 for bright
+	 */
+	public int getColor()
+	{
+		return color;
+	}
+	
 	public boolean isOpposedTo(Team other)
 	{
 		return !allies.contains(other);
@@ -60,5 +76,12 @@ public class Team {
 		}
 		return false;
 	}
-	
+	public void setBase(TileSpawner t)
+	{
+		this.homeBase = t;
+	}
+	public TileSpawner getBase()
+	{
+		return homeBase;
+	}
 }

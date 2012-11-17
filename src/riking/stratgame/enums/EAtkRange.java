@@ -7,9 +7,9 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
-import riking.stratgame.Tile;
 import riking.stratgame.iterators.IteratorLine;
 import riking.stratgame.iterators.IteratorNeighbors;
+import riking.stratgame.tiles.Tile;
 
 public enum EAtkRange {
 	Melee(IteratorNeighbors.class),

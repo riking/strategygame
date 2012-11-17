@@ -3,7 +3,7 @@ package riking.stratgame;
 import java.util.ArrayList;
 
 import riking.stratgame.Team;
-import riking.stratgame.Tile;
+import riking.stratgame.tiles.Tile;
 
 public class World {
 	public Tile[][] tiles;

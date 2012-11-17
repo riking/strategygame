@@ -3,10 +3,10 @@ package riking.stratgame.tasks;
 import java.util.Random;
 
 import riking.RandUtils;
-import riking.stratgame.TileSpawner;
 import riking.stratgame.Unit;
 import riking.stratgame.enums.EAtkRange;
 import riking.stratgame.enums.EAtkType;
+import riking.stratgame.tiles.TileSpawner;
 
 public class TaskSpawner extends TaskBasic {
 	TileSpawner tile;

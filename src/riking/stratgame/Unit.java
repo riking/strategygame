@@ -2,8 +2,9 @@ package riking.stratgame;
 
 import riking.stratgame.enums.EAtkRange;
 import riking.stratgame.enums.EAtkType;
+import riking.stratgame.tiles.Tile;
 
-public class Unit {
+public class Unit implements Targetable {
 	public Team team;
 	public World world;
 	public EAtkType eAttackType;

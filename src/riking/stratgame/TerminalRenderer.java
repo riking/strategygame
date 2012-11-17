@@ -1,12 +1,14 @@
-﻿public class TerminalRenderer
+﻿package riking.stratgame;
+
+public class TerminalRenderer
 {
 	// windows terminal default size 80 wide 25 high
 	// gnome terminal 80x40?
 	
 	// ANSI.moveCursor(h,v)
 	// ANSI.cls()
-	// ANSI.color(bool bright, int color)
-	// ANSI.color(bool bright, char color)
+	// ANSI.color(boolean bright, int color)
+	// ANSI.color(boolean bright, char color)
 	// ANSI.color(int color) converts color 0-15 to 0-7+bright
 	// ANSI.resetStyle()
 	public void paintBase()
@@ -41,72 +43,88 @@
 			output(" ");
 		}
 	}
-	public void paintPrePrompt(Team t)
+	public void paintStatus(Team t)
 	{
+		World world = World.getWorld();
 		int tco = t.getColor();
 		ANSI.moveCursor(33,1);
 		ANSI.resetStyle();
 		output("Money: ");
 		ANSI.color(tco);
-		String cash = Integer.toString(t.getMoney());
-		if cash.len
-		output(cashout);
+		String cash = Long.toString(t.getMoney());
+		if (cash.length()>11)
+		{
+			/*123456789012 -> 1.23456e+11*/
+			StringBuilder sb = new StringBuilder();
+			sb.append(cash.charAt(0));
+			sb.append('.');
+			sb.append(cash.substring(1, 5));
+			sb.append("e+");
+			sb.append(cash.length()-1);
+		}
+		output(cash);
 		
 		ANSI.moveCursor(33,2);
 		ANSI.resetStyle();
 		output("Base HP: ");
 		ANSI.color(tco);
 		
-		for (int i=0; i < World.teamCount; i++)
+		for (Team te : world.teams)
 		{
 			
 		}
 	}
-	public static class ANSI
+	static void output(String s)
 	{
-		public static void cls()
+		System.out.print(s);
+	}
+	static class ANSI
+	{
+		static final String CSI = "\u001b[";
+		static void cls()
+		{
+			System.out.print(CSI);
+			System.out.print("2J");
+		}
+		static void moveCursor(int hz, int vt)
 		{
 			
 		}
-		public static void moveCursor(int hz, int vt)
+		static void color(int col)
 		{
 			
 		}
-		public static void color(int col)
-		{
-			
-		}
-		public static void resetStyle()
+		static void resetStyle()
 		{
 			
 		}
 	}
 }
 /*
-*****************************************************************************
-cccccccccccccccccccccccccccccc  Money: xxxxxxxxxxx
-c+--+--+--+--+--+--+--+--+--+c  Base HP: xxxx/xxxx
-c|  |  |  |  |  |  |  |  |  |c  
-c+--+--+--+--+--+--+--+--+--+c  Unit Info (Friendly):
-c|  |  |  |  |  |  |  |  |  |c   HP: xxxxx
-c+--+--+--+--+--+--+--+--+--+c   Attack: xxxxx
-c|  |  |  |  |  |  |  |  |  |c   Atk Clr: RGB
-c+--+--+--+--+--+--+--+--+--+c   Def: (R)xxx% (G)xxx% (B)xxx%
-c|  |  |  |  |  |  |  |  |  |c   Move Speed: xxxx (T+xxxx)
-c+--+--+--+--+--+--+--+--+--+c   Attk Speed: xxxx (T+xxxx)
-c|  |  |  |  |  |  |  |  |  |c 
-c+--+--+--+--+--+--+--+--+--+c
-c|  |  |  |  |  |  |  |  |  |c
-c+--+--+--+--+--+--+--+--+--+c
-c|  |  |  |  |  |  |  |  |  |c
-c+--+--+--+--+--+--+--+--+--+c
-c|  |  |  |  |  |  |  |  |  |c
-c+--+--+--+--+--+--+--+--+--+c
-c|  |  |  |  |  |  |  |  |  |c
-c+--+--+--+--+--+--+--+--+--+c
-cccccccccccccccccccccccccccccc
-
-
-
+******************************************************************************
+cccccccccccccccccccccccccccccc+--------------------+------------------------+*
+c+--+--+--+--+--+--+--+--+--+c| Money: xxxxxxxxxxx |T Money & Spawnxxxx tttt|*
+c|  |  |  |  |  |  |  |  |  |c| Base HP: xxxx/xxxx |T xxxxxxxxxxxxxxxxx tttt|*
+c+--+--+--+--+--+--+--+--+--+c| Unit Info (Team C) |T                       |*
+c|  |  |  |  |  |  |  |  |  |c|  HP: xxxxx         |T                       |*
+c+--+--+--+--+--+--+--+--+--+c|  Attack: xxxxx     |T                       |*
+c|  |  |  |  |  |  |  |  |  |c|  Atk Type: xxxxxxx |T                       |*
+c+--+--+--+--+--+--+--+--+--+c|  Atk Clr: RGB      |T                       |*
+c|  |  |  |  |  |  |  |  |  |c|  Def:              |T                       |*
+c+--+--+--+--+--+--+--+--+--+c|   (R) xxx%         |T                       |*
+c|  |  |  |  |  |  |  |  |  |c|   (G) xxx%         |T                       |*
+c+--+--+--+--+--+--+--+--+--+c|   (B) xxx%         |T                       |*
+c|  |  |  |  |  |  |  |  |  |c|  Attk Speed: xxxxx |T                       |*
+c+--+--+--+--+--+--+--+--+--+c|  Move Speed: xxxxx |T                       |*                        *
+c|  |  |  |  |  |  |  |  |  |c+--------------------+------------------------+*
+c+--+--+--+--+--+--+--+--+--+c|                                              *
+c|  |  |  |  |  |  |  |  |  |c|                                              *
+c+--+--+--+--+--+--+--+--+--+c|                                              *
+c|  |  |  |  |  |  |  |  |  |c|                                              *
+c+--+--+--+--+--+--+--+--+--+c|                                              *
+cccccccccccccccccccccccccccccc|                                              *
+------------------------------+                                              *
+                                                                             *
+                                                                             *
 *******************************************************************************
 */
