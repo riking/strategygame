@@ -77,6 +77,14 @@ public class Team {
 		}
 		return false;
 	}
+	public boolean hasMoney(long cost)
+	{
+		return money >= cost;
+	}
+	public boolean hasMoney(int cost)
+	{
+		return money >= cost;
+	}
 	public void setBase(TileSpawner t)
 	{
 		this.homeBase = t;

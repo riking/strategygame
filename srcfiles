@@ -1,3 +1,4 @@
+-d bin/
 src/riking/TestMain.java
 src/riking/stratgame/World.java
 src/riking/stratgame/Team.java

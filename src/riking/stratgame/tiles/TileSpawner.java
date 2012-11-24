@@ -3,6 +3,7 @@ package riking.stratgame.tiles;
 import riking.stratgame.Team;
 import riking.stratgame.TerminalRenderer;
 import riking.stratgame.World;
+import riking.stratgame.menus.MenuChoice;
 import riking.stratgame.tasks.Task;
 import riking.stratgame.tasks.TaskSpawner;
 import riking.stratgame.units.Targetable;
@@ -12,6 +13,9 @@ public class TileSpawner extends Tile implements Targetable {
 	public int health;
 	public World world;
 	public TerminalRenderer screen;
+	public MenuChoice[] choices = new MenuChoice[] {
+		
+	};
 	
 	public TileSpawner(Team t, int posx, int posy) {
 		super(posx, posy);

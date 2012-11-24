@@ -10,7 +10,7 @@ public class GameStarter
 		Team RED = new Team(1,"RED",1);
 		Team BLUE= new Team(2,"BLU",4);
 		TileSpawner redSpawn = new TileSpawner(RED, 1, 1);
-		TileSpawner bluSpawn = new TileSpawner(BLUE, 8, 8);
+		TileSpawner bluSpawn = new TileSpawner(BLUE, 7, 7);
 		w.addTeam(RED).addTeam(BLUE).replaceTile(redSpawn).replaceTile(bluSpawn);
 		redSpawn.scheduleFirstRun();
 		bluSpawn.scheduleFirstRun();
