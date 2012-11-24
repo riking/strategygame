@@ -25,14 +25,17 @@ public class TickTaskScheduler {
 			return;
 		}
 		System.out.println("tick "+Long.toString(t)+" (next "+Long.toString(tasks.first().tick)+")");
+		if (next.tick > t) return;
 		if (next.tick < t)
 		{
 			System.err.println("WARNING: executing early tasks");
 			next = doPriorTasks(t); // Will return next task to run
 		}
-		if (next.tick > t) return;
-		next.run();
-		assert(tasks.remove(next));
+		if (next.tick == t)
+		{
+			next.run();
+			assert(tasks.remove(next));
+		}
 	}
 	private Task doPriorTasks(long untilTick)
 	{
@@ -41,7 +44,7 @@ public class TickTaskScheduler {
 		{
 			if(next.postExecuteBehavior != Task.PEBehavior.ALLOW_POST_EXECUTE)
 			{
-				throw new IllegalStateException("Post-executed task");
+				new IllegalStateException("Post-executed task").printStackTrace();
 			}
 			next.run();
 			if (!tasks.remove(next))

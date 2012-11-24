@@ -12,6 +12,7 @@ public class World {
 	public TickTaskScheduler scheduler;
 	public static World instance;
 	public boolean theGameMustGoOn;
+	public TerminalRenderer screen;
 	
 	public long tick = 0;
 	public ArrayList<Team> teams = new ArrayList<Team>(2);
@@ -30,6 +31,7 @@ public class World {
 	public World(int sizeX, int sizeY)
 	{
 		scheduler = new TickTaskScheduler();
+		screen = new TerminalRenderer();
 		this.sizeX = sizeX;
 		this.sizeY = sizeY;
 		tiles = new Tile[sizeX][sizeY];
@@ -56,5 +58,9 @@ public class World {
 	{
 		teams.add(t);
 		return this;
+	}
+	public TerminalRenderer getScreen()
+	{
+		return screen;
 	}
 }

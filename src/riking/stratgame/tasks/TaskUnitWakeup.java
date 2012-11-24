@@ -1,6 +1,6 @@
 package riking.stratgame.tasks;
 
-import riking.stratgame.Unit;
+import riking.stratgame.units.Unit;
 
 public class TaskUnitWakeup extends TaskBasic {
 

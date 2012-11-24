@@ -26,6 +26,7 @@ public class Team {
 		this.id = id;
 		this.name = name;
 		this.ident = ident;
+		this.color = color;
 		allies = new ArrayList<Team>(1);
 	}
 	/**

@@ -3,10 +3,11 @@ package riking.stratgame.tasks;
 import java.util.Random;
 
 import riking.RandUtils;
-import riking.stratgame.Unit;
+import riking.stratgame.TerminalRenderer;
 import riking.stratgame.enums.EAtkRange;
 import riking.stratgame.enums.EAtkType;
 import riking.stratgame.tiles.TileSpawner;
+import riking.stratgame.units.Unit;
 
 public class TaskSpawner extends TaskBasic {
 	TileSpawner tile;
@@ -20,13 +21,30 @@ public class TaskSpawner extends TaskBasic {
 	}
 	@Override
 	public void run() {
-		if (!tile.containsUnit())
-		{
-			Unit u = createBasicUnit();
-			u.deploy(tile.posX, tile.posY);
-			tile.world.scheduler.add(new TaskUnitWakeup(u,100));
-		}
+		tile.myteam.addMoney(250);
 		tile.world.scheduler.add(new TaskSpawner(tile,1000));
+		
+		int menuchoice = tile.screen.displayInGameMenu(new String[] {
+				"Spawn new Unit (400)",
+				"Spawn Custom Unit (750+)",
+				"Pass"
+		}, tile.myteam);
+		switch(menuchoice)
+		{
+		case 1:
+			if (!tile.containsUnit())
+			{
+				Unit u = createBasicUnit();
+				u.deploy(tile.posX, tile.posY);
+				tile.world.scheduler.add(new TaskUnitWakeup(u,100));
+			}
+			break;
+		case 2:
+			break;
+		case 3:
+			return;
+			// No break needed
+		}
 	}
 	public Unit createBasicUnit()
 	{

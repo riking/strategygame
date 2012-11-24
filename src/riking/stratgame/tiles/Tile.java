@@ -1,7 +1,7 @@
 package riking.stratgame.tiles;
 
 import riking.stratgame.Team;
-import riking.stratgame.Unit;
+import riking.stratgame.units.Unit;
 
 public class Tile {
 	public int posX;
